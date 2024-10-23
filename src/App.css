@@ -1,27 +1,43 @@
-.hexagon {
-  position: relative;
-  width: 80px;
-  height: 40px;
-  background-color: red;
-  margin: 20px;
+
+.start-btn {
+  background: #fff;
+  border: none;
+  padding: 10px 20px;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  width: 180px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transform: skew(-21deg);
 }
 
-.hexagon::before,
-.hexagon::after {
-  content: "";
+.start-btn span {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  transform: skew(21deg);
+}
+
+.start-btn::before {
+  content: '';
   position: absolute;
-  width: 0;
-  border-left: 40px solid transparent;
-  border-right: 40px solid transparent;
+  top: 0;
+  bottom: 0;
+  right: 100%;
+  left: 0;
+  background: rgb(20, 20, 20);
+  opacity: 0;
+  z-index: -1;
+  transition: all 0.5s;
 }
 
-.hexagon::before {
-  bottom: 100%;
-  border-bottom: 20px solid red;
+.start-btn:hover {
+  color: #fff;
 }
 
-.hexagon::after {
-  top: 100%;
-  width: 0;
-  border-top: 20px solid red;
+.start-btn:hover::before {
+  left: 0;
+  right: 0;
+  opacity: 1;
 }
