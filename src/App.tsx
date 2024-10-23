@@ -1,15 +1,9 @@
 import React from 'react'
-import Header from './components/share/Header'
-import Home from './view/Home'
-import Quiz from './page/page1/Quiz'
-
+import { RouterProvider } from 'react-router-dom';
+import { approute } from './routes/AppRoute';
 function App() {
   return (
-    <div>
-      <Header/>
-      <Home/>
-      <Quiz />
-    </div>
+   <RouterProvider router={approute}/>
   )
 }
 
