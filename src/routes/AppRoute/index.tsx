@@ -1,5 +1,6 @@
 import HomePage from "../../page/HomePage";
-import SelectPage from "../../page/SelectPage";
+import SearchingPage from "../../page/SearchingPage";
+import ModeSelectPage from "../../page/ModeSelectPage";
 
 const { createBrowserRouter } = require('react-router-dom');
 
@@ -10,7 +11,11 @@ export const approute = createBrowserRouter([
     },
     {
       path: '/selectpage',
-      element: <SelectPage/>
+      element: <ModeSelectPage/>
+    },
+    {
+      path: '/searchingpage',
+      element: <SearchingPage/>
     },
    
   ]);
