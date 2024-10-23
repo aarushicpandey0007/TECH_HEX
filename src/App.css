@@ -1,6 +1,9 @@
-
+body{
+  background-color: #0c0c0c;
+  color: white;
+}
 .start-btn {
-  background: #fff;
+  background: #0c0c0c;
   border: none;
   padding: 10px 20px;
   display: inline-block;
@@ -26,14 +29,14 @@
   bottom: 0;
   right: 100%;
   left: 0;
-  background: rgb(20, 20, 20);
+  background: rgb(255, 255, 255);
   opacity: 0;
   z-index: -1;
   transition: all 0.5s;
 }
 
 .start-btn:hover {
-  color: #fff;
+  color: #0c0c0c;
 }
 
 .start-btn:hover::before {
