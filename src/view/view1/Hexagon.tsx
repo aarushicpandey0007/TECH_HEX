@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 
 const Hexagon: React.FC = () => {
-    const [startSlide, setStartSlide] = useState(true);
     const [activeHex, setActiveHex] = useState<number | null>(null); // Track the active hexagon
-    const [blockedHexes, setBlockedHexes] = useState<number[]>([]); // Track blocked hexagons
 
     const hexagonStyle = {
         clipPath: 'polygon(50% 0%, 6.7% 25%, 6.7% 75%, 50% 100%, 93.3% 75%, 93.3% 25%)',
     };
 
     const handleHexClick = (index: number) => {
-        if (blockedHexes.includes(index)) return; // If hexagon is blocked, prevent interaction
-        setActiveHex(prevActive => (prevActive === index ? null : index)); // Toggle active hexagon
+        // Toggle active hexagon
+        setActiveHex(prevActive => (prevActive === index ? null : index));
     };
 
     const renderRows = (totalRows: number, hexCount: number) => {
@@ -27,17 +25,15 @@ const Hexagon: React.FC = () => {
                         // Calculate unique index for each hexagon
                         const hexIndex = rowIndex * hexCount + hexIndexInner;
                         const isActive = activeHex === hexIndex; // Check if this hexagon is active
-                        const isBlocked = blockedHexes.includes(hexIndex); // Check if this hexagon is blocked
 
                         return (
                             <div
                                 key={hexIndex}
                                 style={hexagonStyle}
                                 onClick={() => handleHexClick(hexIndex)}
-                                className={`w-[100px] h-[86.6px] 
+                                className={`h-[95px] w-[100px] 
                                     inline-block border border-gray-400 -m-1.5 
-                                    ${isBlocked ? 'bg-gray-500 cursor-not-allowed' : 'bg-gray-300 cursor-pointer'} 
-                                    ${isActive ? 'bg-red-500 shadow-2xl transform scale-95' : 'hover:bg-red-500 hover:shadow-lg hover:-translate-y-2'}
+                                    ${isActive ? 'bg-red-500 shadow-2xl transform scale-95' : 'bg-gray-300 cursor-pointer hover:bg-red-500 hover:shadow-lg hover:-translate-y-2'}
                                     transition-all duration-300 ease-in-out`}
                             ></div>
                         );
@@ -48,8 +44,8 @@ const Hexagon: React.FC = () => {
     };
 
     return (
-        <div className={`flex flex-col items-center rotate-90 mt-40`}>
-            {renderRows(7, 7)}  {/* 7 rows with 7 hexagons in each */}
+        <div className={`flex flex-col items-center mt-20`}>
+            {renderRows(8, 7)} 
         </div>
     );
 };
