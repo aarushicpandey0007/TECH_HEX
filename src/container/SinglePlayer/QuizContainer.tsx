@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Hexagon from '../../view/view1/Hexagon';
+import InfoPanel from "../../components/custom/InfoPanel"
 
 const QuizContainer: React.FC = () => {
     const [activeHex, setActiveHex] = useState<number | null>(null); // Track the active hexagon
@@ -37,9 +38,16 @@ const QuizContainer: React.FC = () => {
     };
 
     return (
-        <div className={`flex flex-col items-center mt-20`}>
-            {renderRows(7, 7)}
-        </div>
+<div className={`flex items-start justify-center`}>
+    <div className='info-panel w-[2%] ml-10 mt-52'>
+        <InfoPanel />
+    </div>
+
+    <div className={`flex flex-col items-center justify-center flex-grow mt-20`}>
+        {renderRows(7, 7)}
+    </div>
+</div>
+
     );
 };
 

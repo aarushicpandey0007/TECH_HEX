@@ -12,6 +12,7 @@ const hexagonStyle = {
 const Hexagon: React.FC<HexagonProps> = ({ isActive, onClick }) => {
     return (
         <>
+           
             <div
                 style={hexagonStyle}
                 onClick={onClick}
