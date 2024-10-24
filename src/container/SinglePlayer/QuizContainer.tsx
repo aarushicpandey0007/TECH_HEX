@@ -39,14 +39,15 @@ const QuizContainer: React.FC = () => {
 
     return (
 <div className={`flex items-start justify-center`}>
-    <div className='info-panel w-[2%] ml-10 mt-52'>
+    <div className='info-panel w-[20%] md:w-[10%] lg:w-[2%] ml-4 md:ml-6 lg:ml-10 mt-20 md:mt-28 lg:mt-52'>
         <InfoPanel />
     </div>
 
-    <div className={`flex flex-col items-center justify-center flex-grow mt-20`}>
+    <div className={`flex flex-col items-center justify-center flex-grow mt-10 md:mt-14 lg:mt-20`}>
         {renderRows(7, 7)}
     </div>
 </div>
+
 
     );
 };
