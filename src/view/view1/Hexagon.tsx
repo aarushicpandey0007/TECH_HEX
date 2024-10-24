@@ -45,7 +45,7 @@ const Hexagon: React.FC = () => {
 
     return (
         <div className={`flex flex-col items-center mt-20`}>
-            {renderRows(8, 7)} 
+            {renderRows(7, 7)}
         </div>
     );
 };
