@@ -5,13 +5,7 @@ import HexagonIcon from "../../components/custom/Hexagon"
 import SearchingSpinner from '../../components/custom/SearchingSpinner'
 const SearchingView = () => {
   return (
-    <div className='bg-black min-h-screen'  style={{
-      backgroundImage: `url(${hex1})`,
-      // Set the desired size for each repeated image
-      backgroundSize: '80%',
-      backgroundPosition: "center",
-      
-    }}>
+    <div className='bg-black min-h-screen' >
          <header className="px-4 lg:px-6 h-14 flex items-center">
         <a className="flex items-center justify-center text-white" href="#">
           <HexagonIcon />
