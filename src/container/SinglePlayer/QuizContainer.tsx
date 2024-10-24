@@ -1,0 +1,46 @@
+import React, { useState } from 'react';
+import Hexagon from '../../view/view1/Hexagon';
+
+const QuizContainer: React.FC = () => {
+    const [activeHex, setActiveHex] = useState<number | null>(null); // Track the active hexagon
+
+    const handleHexClick = (index: number) => {
+        // Toggle active hexagon
+        setActiveHex(prevActive => (prevActive === index ? null : index));
+    };
+
+    const renderRows = (totalRows: number, hexCount: number) => {
+        return Array.from({ length: totalRows }).map((_, rowIndex) => {
+            const isOffset = rowIndex % 2 !== 0; // Offset for every alternate row
+
+            return (
+                <div
+                    key={rowIndex}
+                    className={`flex ${isOffset ? 'translate-x-[50px]' : 'ml-2.5'} -mt-2`}
+                >
+                    {Array.from({ length: hexCount }).map((_, hexIndexInner) => {
+                        // Calculate unique index for each hexagon
+                        const hexIndex = rowIndex * hexCount + hexIndexInner;
+                        const isActive = activeHex === hexIndex; // Check if this hexagon is active
+
+                        return (
+                            <Hexagon
+                                key={hexIndex}
+                                isActive={isActive}
+                                onClick={() => handleHexClick(hexIndex)}
+                            />
+                        );
+                    })}
+                </div>
+            );
+        });
+    };
+
+    return (
+        <div className={`flex flex-col items-center mt-20`}>
+            {renderRows(7, 7)}
+        </div>
+    );
+};
+
+export default QuizContainer;
