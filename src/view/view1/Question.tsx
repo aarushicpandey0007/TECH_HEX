@@ -55,8 +55,8 @@ const Question: React.FC<QuestionProps> = ({ question, options }) => {
               r="40"
               cx="50%"
               cy="50%"
-              strokeDasharray="251.2" // Full circumference of the circle (2 * π * radius)
-              strokeDashoffset="251.2" // Start with full circumference offset
+              strokeDasharray="251.2"
+              strokeDashoffset="251.2"
               variants={circleVariants}
               initial="initial"
               animate="animate"
