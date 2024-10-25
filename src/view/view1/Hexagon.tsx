@@ -83,7 +83,7 @@ const Hexagon: React.FC<QuizComponentProps> = ({
     return (
         <div className='flex justify-between py-10 px-10'>
             <div>
-                <h1 className='w-full flex flex-col items-center text-2xl font-bold'>Team Blue</h1>
+                <h1 className='w-full flex flex-col items-center text-4xl font-bold text-blue-600'>Team Blue</h1>
                 {currentTeam === 'teamA' ? (
                     <QuizComponent
                         resetQuiz={resetQuiz}
@@ -99,7 +99,7 @@ const Hexagon: React.FC<QuizComponentProps> = ({
                 {renderRows(8, 7)} 
             </div>
             <div>
-                <h1 className='w-full flex flex-col items-center text-2xl font-bold'>Team Yellow</h1>
+                <h1 className='w-full flex flex-col items-center text-4xl font-bold text-yellow-600'>Team Yellow</h1>
                 {currentTeam === 'teamB' ? (
                     <QuizComponent
                         resetQuiz={resetQuiz}

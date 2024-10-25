@@ -21,10 +21,7 @@ const QuizContainer = () => {
   const [hexagonColors, setHexagonColors] = useState<HexagonColors>({}); // State to hold colors of hexagons
   const timeoutRef = useRef<NodeJS.Timeout | null>(null); // Use useRef to store timeout ID
   const lastHexagonId = useRef<string | null>(null); // Ref to store the last clicked hexagon ID
-  const [msg,setMsg]=useState<string | null>(null);
-  const [touch, setTouch] = useState<boolean | null>(false);
-  
-
+  const [msg, setMsg] = useState<string | null>(null);
 
   const question: Question = {
     text: 'What is the capital of France?',
@@ -34,22 +31,16 @@ const QuizContainer = () => {
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option); // Update the selected option
-    console.log("Selected option:", option);
-
     const isCorrectOption = option === question.correctAnswer; // Check if the selected option is correct
     setIsCorrect(isCorrectOption);
-    console.log("Is correct option:", isCorrectOption); // Update the correctness state
 
-    // Check if there was a previous hexagon click event
     if (lastHexagonId.current) {
       const hexagonId = lastHexagonId.current; // Get the last clicked hexagon ID
-      console.log('Handle option - Last clicked hexagon ID:', hexagonId);
 
-      // Create a mock event to pass to handleHexClick
       const mockEvent = {
         currentTarget: {
           id: hexagonId,
-          style: {}, // You can initialize any styles you expect to manipulate
+          style: {}, // Initialize any styles you expect to manipulate
         },
       } as React.MouseEvent<HTMLDivElement>;
 
@@ -63,77 +54,79 @@ const QuizContainer = () => {
   const resetQuiz = () => {
     setSelectedOption(null); // Reset the selected option
     setIsCorrect(null); // Reset the correctness state
-   
-    startTimer(); // Reset the timer to 5 seconds
-    setMsg("Now your Turn")
+    startTimer(); // Restart the timer for the next question
+    setMsg("Now your Turn");
   };
 
   // Function to handle hexagon clicks
   const handleHexClick = (e: React.MouseEvent<HTMLDivElement>, isCorrectOption: boolean | null) => {
-    
-    setMsg("")
+    setMsg("");
     const hexagonId = e.currentTarget.id; // Access the ID of the clicked element
     lastHexagonId.current = hexagonId; // Store the hexagon ID for later reference
-    console.log('Clicked hexagon ID:', hexagonId);
 
-    // Clear existing timeout when an option is clicked
-   
-    // Change color based on correctness
     if (isCorrectOption) {
       // Set the color for the clicked hexagon based on the current team
-      setMsg("correct!!")
+      setMsg("correct!!");
       setHexagonColors(prevColors => ({
         ...prevColors,
-        [hexagonId]: currentTeam === 'teamA' ? 'red' : 'yellow',
+        [hexagonId]: currentTeam === 'teamA' ? 'blue' : 'yellow',
       }));
-      
-      startTimer();
-    } if(isCorrectOption===false) {
-      setMsg("Now Your Turn")
+
+      // Clear the timer and restart it when an answer is correct
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      startTimer(); // Restart timer for the next question
+    } else if (isCorrectOption === false) {
+      // Handle incorrect answer, let the timer run
+      setMsg("Wrong answer");
       setHexagonColors(prevColors => ({
         ...prevColors,
-        [hexagonId]: 'gray', // Example color for incorrect answers
+        [hexagonId]: 'gray', // Color for incorrect answers
       }));
-      handleWrongAnswer();
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      // Switch to the other team after 2 seconds
+      setTimeout(() => {
+        handleWrongAnswer();
+      }, 2000); // 2-second delay before switching the team
     }
-   
-    
-    // Start a new timer
-    setIsCorrect(null);
-   // Call the function to start the timer
+
+    setIsCorrect(null); // Reset correctness state
   };
 
   const startTimer = () => {
-    // Clear any existing timer
-    console.log("hii")
+    // Ensure no existing timer is running
     if (timeoutRef.current) {
-     
       clearTimeout(timeoutRef.current);
     }
 
+    // Start the timer (for 5 seconds or configured time)
     timeoutRef.current = setTimeout(() => {
-      handleWrongAnswer();
-      console.log("boom")
-    }, timer * 1000); // Set timeout in milliseconds
+      handleWrongAnswer(); // Call handleWrongAnswer when timer expires
+      console.log("Timer expired, switching turn.");
+    }, timer * 1000); // Timer duration in milliseconds
   };
 
   const handleWrongAnswer = () => {
-    setCurrentTeam((prevTeam) => (prevTeam === 'teamA' ? 'teamB' : 'teamA'));
-    resetQuiz(); // Reset quiz after a wrong answer
+    setMsg("Now Your Turn");
+    setCurrentTeam(prevTeam => (prevTeam === 'teamA' ? 'teamB' : 'teamA')); // Switch team
+    resetQuiz(); // Reset quiz for the next round
   };
 
-  
   useEffect(() => {
-   startTimer();
-   return () => {
-    // Cleanup: Clear the timeout when the component unmounts
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-  };
+    startTimer(); // Start the timer when the component mounts
+
+    return () => {
+      // Cleanup: clear the timeout when the component unmounts
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
 
- 
   return (
     <Hexagon
       handleHexClick={handleHexClick}

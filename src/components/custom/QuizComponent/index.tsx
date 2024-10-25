@@ -25,7 +25,7 @@ const QuizComponent: React.FC<QuizComponentProps> = ({
 }) => {
   return (
     <div className="quiz-container flex flex-col items-center p-4">
-      <h2 className="text-xl font-bold mb-4">{question.text}</h2>
+      <h2 className="text-4xl font-bold mb-4">{question.text}</h2>
       <div className="options grid grid-cols-2 gap-4 mb-4">
         {question.options.map((option, index) => (
           <button
@@ -42,9 +42,10 @@ const QuizComponent: React.FC<QuizComponentProps> = ({
         ))}
       </div>
        
-        <div className='text-green-400 text-xl'>
-         {msg}
-        </div>
+      <div className={msg === "correct!!" ? "text-green-400 text-xl" : msg === "Wrong answer" ? "text-red-600" : "text-blue-600"}>
+  {msg}
+</div>
+
       
       <button
         className="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
