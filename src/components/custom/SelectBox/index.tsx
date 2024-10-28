@@ -28,6 +28,7 @@ const SelectBox = ({firstText,lastText,command}:SelectProps) => {
           {command} →
         </button>
       </NavLink>
+
     </div>
   </motion.div>
   

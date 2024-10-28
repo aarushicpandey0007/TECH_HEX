@@ -1,3 +1,4 @@
+
 import HomePage from "../../page/HomePage";
 import SearchingPage from "../../page/SearchingPage";
 import ModeSelectPage from "../../page/ModeSelectPage";
@@ -20,3 +21,4 @@ export const approute = createBrowserRouter([
    
   ]);
   
+
