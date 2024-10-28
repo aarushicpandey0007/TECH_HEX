@@ -1,6 +1,7 @@
-import { NavLink } from "react-router-dom";
+
 import HexagonIcon from "../../components/custom/Hexagon"
 import SelectBox from '../../components/custom/SelectBox';
+import hex1 from '../../assets/grid.jpg';
 
 
 
@@ -8,6 +9,13 @@ const ModeSelectView = () => {
   return (
     <div className='bg-black min-h-screen' >
       
+         <header className="px-4 lg:px-6 h-14 flex items-center">
+        <div className="flex items-center justify-center text-white" >
+          <HexagonIcon />
+          <span className="ml-2 text-2xl font-bold text-white">TechHex</span>
+        </div>
+        </header>
+
     <section className="w-full py-5 md:py-24 lg:py-10 xl:py-20 flex flex-col justify-center items-center">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
@@ -23,9 +31,9 @@ const ModeSelectView = () => {
           </div>
         </section>
         <div className="flex items-center justify-center lg:space-x-40 md:space-x-32 space-x-10 pb-52   ">
-    
-<NavLink to="/singleplayer/quiz"><SelectBox firstText="Single" lastText="Player" command="Lets Play"/></NavLink>
-<NavLink to="/multiplayer/quiz"><SelectBox firstText="Multi" lastText="Player" command="Lets Play"/></NavLink>
+<SelectBox firstText="Single" lastText="Player" command="Lets Play"/>
+<SelectBox firstText="Multi" lastText="Player" command="Lets Play"/>
+
 </div>
 
     </div>
