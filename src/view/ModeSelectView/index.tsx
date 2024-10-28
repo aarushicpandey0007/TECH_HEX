@@ -1,6 +1,8 @@
+
 import HexagonIcon from "../../components/custom/Hexagon"
 import SelectBox from '../../components/custom/SelectBox';
 import hex1 from '../../assets/grid.jpg';
+
 
 
 const ModeSelectView = () => {
@@ -28,9 +30,9 @@ const ModeSelectView = () => {
           </div>
         </section>
         <div className="flex items-center justify-center lg:space-x-40 md:space-x-32 space-x-10 pb-52   ">
-    
 <SelectBox firstText="Single" lastText="Player" command="Lets Play"/>
 <SelectBox firstText="Multi" lastText="Player" command="Lets Play"/>
+
 </div>
 
     </div>
