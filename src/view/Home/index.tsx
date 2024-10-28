@@ -2,12 +2,18 @@ import { ArrowRight } from 'lucide-react';
 import React from 'react';
 import "../../App.css";
 import Loader from "../../components/custom/Loader"
+import { useNavigate } from 'react-router-dom';
 
-interface HomeProps {
-  onStartPlaying: () => void;  // Accept the function to trigger navigation to the Quiz
-}
 
-const Home: React.FC<HomeProps> = ({ onStartPlaying }) => {
+
+const Home = () => {
+  
+const navigate = useNavigate();
+
+const startPlaying = () => {
+  navigate('/mode'); // Navigate to the Quiz page
+};
+
   return (
     <div className="">
       <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 flex flex-col items-center">
@@ -27,7 +33,7 @@ const Home: React.FC<HomeProps> = ({ onStartPlaying }) => {
             </div>
             <div className="space-x-4">
               <button
-                onClick={onStartPlaying}  // Call the function to start playing
+                onClick={startPlaying}  // Call the function to start playing
                 className="start-btn"
               >
                <span> Start Playing <ArrowRight className="ml-2 h-4 w-4" /></span>

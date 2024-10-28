@@ -1,44 +1,16 @@
-import React, { useState } from 'react';
+
 import Header from './components/share/Header';
-import Home from './view/Home';
-import QuizPage from "./page/singlePlayer/QuizPage"
-import { AnimatePresence, motion } from 'framer-motion';
+
+import { RouterProvider } from 'react-router-dom';
+import router from './routes/AppRoute';
 
 function App() {
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const handleStartPlaying = () => {
-    setIsPlaying(true); // Switch to Quiz page
-  };
-
+ 
   return (
     <div>
-      <Header />
-
-      <AnimatePresence mode='wait'>
-        {!isPlaying ? (
-          <motion.div
-            key="home"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ duration: 0.6 }}
-          >
-            <Home onStartPlaying={handleStartPlaying} />
-          </motion.div>
-        ) : (
-          <motion.div
-            key="quiz"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ duration: 0.6 }}
-          >
-            <QuizPage />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+    <Header />
+    <RouterProvider router={router} />
+  </div>
   );
 }
 

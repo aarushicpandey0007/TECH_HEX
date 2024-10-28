@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Hexagon from '../../view/view1/Hexagon';
+import Hexagon from '../../view/singlePlayer/Hexagon';
 import InfoPanel from "../../components/custom/InfoPanel"
 
 const QuizContainer: React.FC = () => {
@@ -25,11 +25,12 @@ const QuizContainer: React.FC = () => {
                         const isActive = activeHex === hexIndex; // Check if this hexagon is active
 
                         return (
-                            <Hexagon
+                        <Hexagon
                                 key={hexIndex}
-                                isActive={isActive}
-                                onClick={() => handleHexClick(hexIndex)}
-                            />
+                             isActive={isActive}
+                                onClick={() => handleHexClick(hexIndex)} />
+                            
+                            
                         );
                     })}
                 </div>

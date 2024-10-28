@@ -9,7 +9,7 @@ const InfoPanel: React.FC = () => {
       >
         {/* Team Name Section */}
         <div className="px-5 py-3 flex justify-between items-center transform -skew-x-6">
-          <h3 className="text-zinc-900 dark:text-white text-lg">Team Name</h3>
+          <h3 className=" dark:text-white text-white text-lg">Team Name</h3>
         </div>
 
         {/* Additional Info with Hexagon Icon */}

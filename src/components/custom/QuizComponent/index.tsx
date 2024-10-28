@@ -31,7 +31,7 @@ const QuizComponent: React.FC<QuizComponentProps> = ({
           <button
             key={index}
             className={`py-2 px-4 border rounded-md transition-colors text-black
-              ${selectedOption === option ? msg==="correct!!"? 'bg-green-400': 'bg-gray-200 text-black' : 'bg-gray-200'}
+              ${selectedOption === option ? msg==="Correct!!"? 'bg-green-400 ': 'bg-gray-200 text-black' : 'bg-gray-200'}
              
 
               hover:bg-blue-400 hover:text-white`}
@@ -42,7 +42,7 @@ const QuizComponent: React.FC<QuizComponentProps> = ({
         ))}
       </div>
        
-      <div className={msg === "correct!!" ? "text-green-400 text-xl" : msg === "Wrong answer" ? "text-red-600" : "text-blue-600"}>
+      <div className={msg === "Correct!!" ? "text-green-400 text-xl font-bold" : msg === "Wrong answer" ? "text-red-600 text-xl font-bold" : "text-white font-bold text-xl"}>
   {msg}
 </div>
 

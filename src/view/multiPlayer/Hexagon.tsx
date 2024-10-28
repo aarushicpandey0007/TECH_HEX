@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import QuizComponent from '../../components/custom/QuizComponent';
+import CircularTimer from '../../components/custom/CircularTimmer';
 
 interface Question {
     text: string;
@@ -17,6 +18,9 @@ interface QuizComponentProps {
     currentTeam: 'teamA' | 'teamB';
     hexagonColors: { [key: string]: string }; // New prop for hexagon colors
     msg: string | null;
+    duration: number; // Duration in seconds
+    onComplete: () => void; // Callback when timer completes
+    running: boolean;
 }
 
 const Hexagon: React.FC<QuizComponentProps> = ({
@@ -28,7 +32,11 @@ const Hexagon: React.FC<QuizComponentProps> = ({
     question,
     currentTeam,
     hexagonColors,
-    msg
+    msg,
+    duration,// Duration in seconds
+    onComplete, // Callback when timer completes
+    running
+    
 }) => {
     const [activeHex, setActiveHex] = useState<number | null>(null); // Track the active hexagon
 
@@ -82,9 +90,20 @@ const Hexagon: React.FC<QuizComponentProps> = ({
 
     return (
         <div className='flex justify-between py-10 px-10'>
-            <div>
-                <h1 className='w-full flex flex-col items-center text-4xl font-bold text-blue-600'>Team Blue</h1>
+            <div className=' flex flex-col items-center'>
+                <div className='flex space-x-5 w-60'>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqPo94-TeKk0EUaMzKPtCkB5tBTC4e9uigjA&s" alt="obanai" className='h-16 w-16 rounded-full object-cover' />
+                <h1 className='w-full flex flex-col text-3xl font-serif text-white'>SK Kaif</h1>
+                </div>
                 {currentTeam === 'teamA' ? (
+                    <>
+                                 <div className="timer-container w-full flex flex-col items-center justify-center">
+        <CircularTimer 
+          duration={duration}// Set the duration (in seconds) for the timer
+          onComplete={onComplete} // Handle what happens when the timer completes
+          running={running} // Pass the timer running state
+        />
+      </div>
                     <QuizComponent
                         resetQuiz={resetQuiz}
                         handleOptionClick={handleOptionClick}
@@ -93,14 +112,26 @@ const Hexagon: React.FC<QuizComponentProps> = ({
                         question={question}
                         msg={msg}
                     />
+                    </>
                 ) : null}
             </div>
             <div className={`flex flex-col items-center mt-20`}>
                 {renderRows(8, 7)} 
             </div>
-            <div>
-                <h1 className='w-full flex flex-col items-center text-4xl font-bold text-yellow-600'>Team Yellow</h1>
+            <div className='wifull flex flex-col items-center'>
+            <div className='flex space-x-5 w-60'>
+                    <img src="https://us.oricon-group.com/upimg/detail/0/896/img660/775be1206d509afd38fd0489079cdbe1.jpg" alt="obanai" className='h-16 w-16 rounded-full object-cover' />
+                <h1 className='w-full flex flex-col text-3xl font-serif text-white'>Gangadhar</h1>
+                </div>
                 {currentTeam === 'teamB' ? (
+                    <>
+                     <div className="timer-container w-full flex flex-col items-center justify-center">
+        <CircularTimer 
+          duration={duration}// Set the duration (in seconds) for the timer
+          onComplete={onComplete} // Handle what happens when the timer completes
+          running={running} // Pass the timer running state
+        />
+      </div>
                     <QuizComponent
                         resetQuiz={resetQuiz}
                         handleOptionClick={handleOptionClick}
@@ -109,6 +140,7 @@ const Hexagon: React.FC<QuizComponentProps> = ({
                         question={question}
                         msg={msg}
                     />
+                    </>
                 ) : null}
             </div>
         </div>
