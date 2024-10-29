@@ -24,31 +24,30 @@ const QuizComponent: React.FC<QuizComponentProps> = ({
   msg
 }) => {
   return (
-    <div className="quiz-container flex flex-col items-center p-4">
-      <h2 className="text-4xl font-bold mb-4">{question.text}</h2>
-      <div className="options grid grid-cols-2 gap-4 mb-4">
+    <div className="quiz-container flex flex-col items-center p-6 max-w-md mx-auto rounded-lg shadow-md">
+      <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-4">{question.text}</h2>
+      
+      <div className="options grid grid-cols-2 gap-3 mb-4 w-full">
         {question.options.map((option, index) => (
           <button
             key={index}
-            className={`py-2 px-4 border rounded-md transition-colors text-black
-              ${selectedOption === option ? msg==="Correct!!"? 'bg-green-400 ': 'bg-gray-200 text-black' : 'bg-gray-200'}
-             
-
-              hover:bg-blue-400 hover:text-white`}
+            className={`py-3 px-4  border rounded-lg transition-colors
+              ${selectedOption === option && isCorrect === true ? 'bg-green-400' : ''} 
+              ${selectedOption === option && isCorrect === false ? 'bg-red-300' : ''} 
+              ${selectedOption === null ?' hover:bg-blue-400' : ''}`}
             onClick={() => handleOptionClick(option)}
           >
             {option}
           </button>
         ))}
       </div>
-       
-      <div className={msg === "Correct!!" ? "text-green-400 text-xl font-bold" : msg === "Wrong answer" ? "text-red-600 text-xl font-bold" : "text-white font-bold text-xl"}>
-  {msg}
-</div>
-
+      
+      <div className={`text-xl font-semibold mb-4 ${msg === "Correct!!" ? "text-green-500" : msg === "Wrong answer" ? "text-red-500" : "text-gray-500"}`}>
+        {msg}
+      </div>
       
       <button
-        className="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+        className="py-2 px-5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         onClick={resetQuiz}
       >
         Reset

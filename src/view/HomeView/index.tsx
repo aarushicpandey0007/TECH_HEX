@@ -1,7 +1,7 @@
 import { ArrowRight } from 'lucide-react';
 import React from 'react'
 import Header from '../../components/share/Header';
-import Hexagon from '../view1/Hexagon';
+// import Hexagon from '../view1/Hexagon'; 
 import { NavLink } from 'react-router-dom';
 
 

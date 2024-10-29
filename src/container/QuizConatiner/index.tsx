@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Hexagon from '../../view/multiPlayer/Hexagon';
-import CircularTimmer from '../../components/custom/CircularTimmer';
+import CircularTimer from '../../components/custom/CircularTimmer';
 
 type Team = 'teamA' | 'teamB';
 
@@ -15,15 +15,16 @@ type HexagonColors = {
 };
 
 const QuizContainer = () => {
-  const [currentTeam, setCurrentTeam] = useState<Team>('teamA'); // Assume team A starts
+  const [currentTeam, setCurrentTeam] = useState<Team>('teamA');
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  const [timer, setTimer] = useState<number>(5); // 5-second countdown timer
+  const [timer, setTimer] = useState<number>(5);
   const [hexagonColors, setHexagonColors] = useState<HexagonColors>({});
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const lastHexagonId = useRef<string | null>(null);
+  const [showHexPrompt, setShowHexPrompt] = useState<boolean>(false);
   const [msg, setMsg] = useState<string | null>(null);
-  const [timerRunning, setTimerRunning] = useState<boolean>(false); // State to manage the timer's running state
+  const [timerRunning, setTimerRunning] = useState<boolean>(false);
+
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const question: Question = {
     text: 'What is the capital of France?',
@@ -36,107 +37,71 @@ const QuizContainer = () => {
     const isCorrectOption = option === question.correctAnswer;
     setIsCorrect(isCorrectOption);
 
-    if (lastHexagonId.current) {
-      setMsg("Correct!!");
-      const hexagonId = lastHexagonId.current;
-
-      const mockEvent = {
-        currentTarget: {
-          id: hexagonId,
-          style: {},
-        },
-      } as React.MouseEvent<HTMLDivElement>;
-
-      handleHexClick(mockEvent, isCorrectOption);
+    if (isCorrectOption) {
+      setMsg('Correct! Please select a hexagon tile.');
+      setShowHexPrompt(true);
+      setTimerRunning(false); // Stop timer on correct answer
+      clearTimeout(timerRef.current!); // Clear any running timer
     } else {
-      console.log('No hexagon was clicked before this option was selected.');
+      setMsg('Incorrect. Passing the turn.');
+      handleWrongAnswer();
     }
   };
 
   const resetQuiz = () => {
     setSelectedOption(null);
     setIsCorrect(null);
-    setTimerRunning(false); // Stop the timer before resetting
-    startTimer(); // Restart the timer for the next question
-    // setMsg("Now your Turn");
+    setShowHexPrompt(false);
+    setTimerRunning(false);
   };
 
-  const handleHexClick = (e: React.MouseEvent<HTMLDivElement>, isCorrectOption: boolean | null) => {
-    
-    const hexagonId = e.currentTarget.id;
-    lastHexagonId.current = hexagonId;
-
-    if (isCorrectOption) {
-      
+  const handleHexClick = (hexagonId: string) => {
+    if (isCorrect && showHexPrompt) {
       setHexagonColors(prevColors => ({
         ...prevColors,
         [hexagonId]: currentTeam === 'teamA' ? 'blue' : 'yellow',
       }));
-
-      // Clear the timer and restart it when an answer is correct
-      if (timeoutRef.current) {
-        
-        
-        clearTimeout(timeoutRef.current);
-      }
-
-      resetQuiz(); // Reset quiz for the next question
-    } else if (isCorrectOption === false) {
-      setMsg("Wrong answer");
-      setHexagonColors(prevColors => ({
-        ...prevColors,
-        [hexagonId]: 'gray',
-      }));
-      
-      // Handle incorrect answer, let the timer run
-      if (timeoutRef.current) {
-        
-        clearTimeout(timeoutRef.current);
-      }
-      
-      // Switch to the other team after 2 seconds
-      setTimeout(() => {
-        setMsg("");
-        handleWrongAnswer();
-      }, 2000);
+      resetQuiz(); // Reset quiz only after hexagon selection
+      setMsg('');
+      setCurrentTeam(prevTeam => (prevTeam === 'teamA' ? 'teamB' : 'teamA'));
+      setTimerRunning(true); // Restart the timer for the next team
     }
-
-    setIsCorrect(null);
   };
 
   const startTimer = () => {
-    setTimerRunning(true); // Set the timer as running
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
+    clearTimeout(timerRef.current!); // Clear existing timer to avoid overlap
 
-    timeoutRef.current = setTimeout(() => {
-      handleWrongAnswer();
-      console.log("Timer expired, switching turn.");
-    }, timer * 1000);
+    if (timerRunning) {
+      timerRef.current = setTimeout(() => {
+        handleWrongAnswer();
+      }, timer * 1000);
+    }
   };
 
   const handleWrongAnswer = () => {
-    setMsg("Now Your Turn");
+    setMsg('Turn passed to the next team');
+    clearTimeout(timerRef.current!); // Clear the timer to prevent looping
     setCurrentTeam(prevTeam => (prevTeam === 'teamA' ? 'teamB' : 'teamA'));
     resetQuiz();
+    setTimerRunning(true); // Start timer for the next team’s turn
   };
 
   useEffect(() => {
     startTimer();
+    
+    // Cleanup timer on component unmount
+    return () => clearTimeout(timerRef.current!);
+  }, [timerRunning, currentTeam]); // Depend on timerRunning and currentTeam to reset timer when they change
 
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
+  // Initialize timer on component mount (or refresh)
+  useEffect(() => {
+    setTimerRunning(true); // Start the timer when the component mounts
+  }, []); // Run only once when component mounts
 
   return (
     <>
-      
       <Hexagon
-        handleHexClick={handleHexClick}
+        handleHexClick={(e) => handleHexClick(e.currentTarget.id)}
         question={question}
         selectedOption={selectedOption}
         isCorrect={isCorrect}
@@ -145,8 +110,8 @@ const QuizContainer = () => {
         currentTeam={currentTeam}
         hexagonColors={hexagonColors}
         msg={msg}
-        duration={timer} // Set the duration (in seconds) for the timer
-        onComplete={handleWrongAnswer} // Handle what happens when the timer completes
+        duration={timer}
+        onComplete={handleWrongAnswer}
         running={timerRunning}
       />
     </>

@@ -1,15 +1,17 @@
 
-import React from 'react'
+import Header from './components/share/Header';
+
 import { RouterProvider } from 'react-router-dom';
-import { approute } from './routes/AppRoute';
+import router from './routes/AppRoute';
 
 function App() {
+ 
   return (
-   <RouterProvider router={approute}/>
-  )
-
-
+    <div>
+    <Header />
+    <RouterProvider router={router} />
+  </div>
+  );
 }
 
-export default App
-
+export default App;

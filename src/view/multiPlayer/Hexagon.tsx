@@ -33,10 +33,9 @@ const Hexagon: React.FC<QuizComponentProps> = ({
     currentTeam,
     hexagonColors,
     msg,
-    duration,// Duration in seconds
+    duration, // Duration in seconds
     onComplete, // Callback when timer completes
     running
-    
 }) => {
     const [activeHex, setActiveHex] = useState<number | null>(null); // Track the active hexagon
 
@@ -59,10 +58,10 @@ const Hexagon: React.FC<QuizComponentProps> = ({
                         const hexagonId = `${hexIndex}`; // Generate the hexagon ID
 
                         // Check if hexagonColors and the specific color exist
-                        const backgroundColor = 
-                            hexagonColors && hexagonColors[hexagonId] 
-                            ? hexagonColors[hexagonId] 
-                            : '#d1d5db'; // Default color if not found
+                        const backgroundColor =
+                            hexagonColors && hexagonColors[hexagonId]
+                                ? hexagonColors[hexagonId]
+                                : '#d1d5db'; // Default color if not found
 
                         return (
                             <div
@@ -89,21 +88,23 @@ const Hexagon: React.FC<QuizComponentProps> = ({
     };
 
     return (
-        <div className='flex justify-between py-10 px-10'>
-            <div className=' flex flex-col items-center'>
-                <div className='flex space-x-5 w-60'>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqPo94-TeKk0EUaMzKPtCkB5tBTC4e9uigjA&s" alt="obanai" className='h-16 w-16 rounded-full object-cover' />
-                <h1 className='w-full flex flex-col text-3xl font-serif text-white'>SK Kaif</h1>
+        <div className="flex justify-between py-10 px-10">
+            {/* Left team section */}
+            <div className="flex flex-col items-center">
+                <div className="flex space-x-5 w-60">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqPo94-TeKk0EUaMzKPtCkB5tBTC4e9uigjA&s" alt="obanai" className="h-16 w-16 rounded-full object-cover" />
+                    <h1 className="w-full flex flex-col text-3xl font-serif text-white">SK Kaif</h1>
                 </div>
-                {currentTeam === 'teamA' ? (
-                    <>
-                                 <div className="timer-container w-full flex flex-col items-center justify-center">
-        <CircularTimer 
-          duration={duration}// Set the duration (in seconds) for the timer
-          onComplete={onComplete} // Handle what happens when the timer completes
-          running={running} // Pass the timer running state
-        />
-      </div>
+                <div
+                    className={`transition-opacity duration-500 ${currentTeam === 'teamA' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                >
+                    <div className="timer-container w-full flex flex-col items-center justify-center">
+                        <CircularTimer
+                            duration={duration} // Set the duration (in seconds) for the timer
+                            onComplete={onComplete} // Handle what happens when the timer completes
+                            running={running} // Pass the timer running state
+                        />
+                    </div>
                     <QuizComponent
                         resetQuiz={resetQuiz}
                         handleOptionClick={handleOptionClick}
@@ -111,27 +112,32 @@ const Hexagon: React.FC<QuizComponentProps> = ({
                         selectedOption={selectedOption}
                         question={question}
                         msg={msg}
+                        // currentTeam={currentTeam}    
                     />
-                    </>
-                ) : null}
-            </div>
-            <div className={`flex flex-col items-center mt-20`}>
-                {renderRows(8, 7)} 
-            </div>
-            <div className='wifull flex flex-col items-center'>
-            <div className='flex space-x-5 w-60'>
-                    <img src="https://us.oricon-group.com/upimg/detail/0/896/img660/775be1206d509afd38fd0489079cdbe1.jpg" alt="obanai" className='h-16 w-16 rounded-full object-cover' />
-                <h1 className='w-full flex flex-col text-3xl font-serif text-white'>Gangadhar</h1>
                 </div>
-                {currentTeam === 'teamB' ? (
-                    <>
-                     <div className="timer-container w-full flex flex-col items-center justify-center">
-        <CircularTimer 
-          duration={duration}// Set the duration (in seconds) for the timer
-          onComplete={onComplete} // Handle what happens when the timer completes
-          running={running} // Pass the timer running state
-        />
-      </div>
+            </div>
+
+            {/* Hexagon grid section */}
+            <div className="flex flex-col items-center mt-20">
+                {renderRows(8, 7)}
+            </div>
+
+            {/* Right team section */}
+            <div className="flex flex-col items-center">
+                <div className="flex space-x-5 w-60">
+                    <img src="https://us.oricon-group.com/upimg/detail/0/896/img660/775be1206d509afd38fd0489079cdbe1.jpg" alt="obanai" className="h-16 w-16 rounded-full object-cover" />
+                    <h1 className="w-full flex flex-col text-3xl font-serif text-white">Gangadhar</h1>
+                </div>
+                <div
+                    className={`transition-opacity duration-500 ${currentTeam === 'teamB' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                >
+                    <div className="timer-container w-full flex flex-col items-center justify-center">
+                        <CircularTimer
+                            duration={duration} // Set the duration (in seconds) for the timer
+                            onComplete={onComplete} // Handle what happens when the timer completes
+                            running={running} // Pass the timer running state
+                        />
+                    </div>
                     <QuizComponent
                         resetQuiz={resetQuiz}
                         handleOptionClick={handleOptionClick}
@@ -139,9 +145,9 @@ const Hexagon: React.FC<QuizComponentProps> = ({
                         selectedOption={selectedOption}
                         question={question}
                         msg={msg}
+                    
                     />
-                    </>
-                ) : null}
+                </div>
             </div>
         </div>
     );
