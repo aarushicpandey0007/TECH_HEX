@@ -1,12 +1,16 @@
 import React from 'react'
-import Header from './components/share/Header'
-import Home from './view/Home'
+import HexGrid from './view/view1'
+import Single from './view/view1/single'
+
 
 function App() {
   return (
-    <div>
-      <Header/>
-      <Home/>
+    <div className='bg-black min-h-screen'>
+      {/* <Header/>
+      <Home/> */}
+      {/* <HexGrid /> */}
+      <Single/>
+
     </div>
   )
 }

@@ -2,3 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+.clip-hexagon {
+    clip-path: polygon(
+      25% 6.7%, 75% 6.7%, 100% 50%, 
+      75% 93.3%, 25% 93.3%, 0% 50%
+    );
+  }
+  
+
+  .firework {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: yellow;
+    border-radius: 50%;
+  }
+  
+  
